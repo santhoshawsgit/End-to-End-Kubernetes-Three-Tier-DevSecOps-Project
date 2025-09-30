@@ -10,9 +10,17 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/subnets: "subnet-04d1df93b422e7309,subnet-079560635482ce687,subnet-07d42cac7dd8a7f2e"  ### (important) replace with your public subnet IDs
 spec:
+  ingressClassName: alb
   rules:
     - http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 3500
           - path: /
             pathType: Prefix
             backend:
@@ -20,6 +28,3 @@ spec:
                 name: frontend
                 port:
                   number: 3000
-
-~
-~
