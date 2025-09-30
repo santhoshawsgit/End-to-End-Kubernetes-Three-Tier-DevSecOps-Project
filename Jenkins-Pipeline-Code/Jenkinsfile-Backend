@@ -39,13 +39,13 @@ pipeline {
                 }
             }
         }
-  //      stage('OWASP Dependency-Check Scan') {
-    //        steps {
-      //          dir('Application-Code/backend') {
-        //            dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-          //          dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            //    }
-           // }
+    //    stage('OWASP Dependency-Check Scan') {
+      //      steps {
+        //        dir('Application-Code/backend') {
+          //          dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+            //        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+              //  }
+        //    }
         //}
         stage('Trivy File Scan') {
             steps {
@@ -107,7 +107,9 @@ stage("ECR Image Pushing") {
                             echo $BUILD_NUMBER
                             imageTag=$(grep -oP '(?<=backend:)[^ ]+' deployment.yaml)
                             echo $imageTag
-                            sed -i "s/${AWS_ECR_REPO_NAME}:${imageTag}/${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}/" deployment.yaml
+                            # In your Update Deployment file stage
+                            # Update image in deployment.yaml while keeping indentation
+                            sed -i "s|^\\s*image:.*|  image: ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:\${BUILD_NUMBER}|" deployment.yaml
                             git add deployment.yaml
                             git commit -m "Update deployment Image to version \${BUILD_NUMBER}"
                             git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
