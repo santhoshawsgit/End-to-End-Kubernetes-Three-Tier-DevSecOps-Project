@@ -108,7 +108,7 @@ stage("ECR Image Pushing") {
                             echo $BUILD_NUMBER
                             imageTag=$(grep -oP '(?<=frontend:)[^ ]+' deployment.yaml)
                             echo $imageTag
-                             # Update image in deployment.yaml while keeping indentation
+                            # Update image in deployment.yaml while keeping indentation
                             sed -i "s|^\\s*image:.*|  image: ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:\${BUILD_NUMBER}|" deployment.yaml
                             git add deployment.yaml
                             git commit -m "Update deployment Image to version \${BUILD_NUMBER}"
