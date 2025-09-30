@@ -29,6 +29,6 @@ spec:
         imagePullPolicy: Always
         env:
           - name: REACT_APP_BACKEND_URL
-            value: "http://amanpathakdevops.study/api/tasks"
+            value: "https://k8s-threetie-frontend-c843bf4b63-545580554.ap-southeast-1.elb.amazonaws.com/api/tasks"  ##(update alb dns manually and recreate frontend image)
         ports:
         - containerPort: 3000
