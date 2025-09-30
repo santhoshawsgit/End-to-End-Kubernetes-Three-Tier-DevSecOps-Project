@@ -30,5 +30,6 @@ spec:
         env:
           - name: REACT_APP_BACKEND_URL
             value: "https://k8s-threetie-frontend-c843bf4b63-545580554.ap-southeast-1.elb.amazonaws.com/api/tasks"  ##(update alb dns manually and recreate frontend image)
+            ##(in realworld route53 url is used in place on albdns)
         ports:
         - containerPort: 3000
